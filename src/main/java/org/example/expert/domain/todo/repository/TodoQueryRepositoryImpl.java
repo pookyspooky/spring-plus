@@ -1,6 +1,7 @@
 package org.example.expert.domain.todo.repository;
 
 import static org.example.expert.domain.todo.entity.QTodo.todo;
+import static org.example.expert.domain.user.entity.QUser.user;
 
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -18,6 +19,7 @@ public class TodoQueryRepositoryImpl implements TodoQueryRepository{
         return queryFactory
                 .select(todo)
                 .from(todo)
+                .join(todo.user, user).fetchJoin()
                 .where(
                         todoIdEq(todoID)
                 ).fetchOne();
