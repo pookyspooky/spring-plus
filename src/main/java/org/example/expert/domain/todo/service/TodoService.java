@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.client.WeatherClient;
 import org.example.expert.domain.common.dto.AuthUser;
+import org.example.expert.domain.todo.dto.TodoSearchDto;
 import org.example.expert.domain.todo.dto.request.TodoSaveRequest;
 import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.dto.response.TodoSaveResponse;
@@ -78,5 +79,17 @@ public class TodoService {
                 todo.getCreatedAt(),
                 todo.getModifiedAt()
         );
+    }
+
+    public Page<TodoSearchDto> search(
+            String title,
+            String managerNickname,
+            LocalDateTime startDate,
+            LocalDateTime endDate,
+            int page,
+            int size
+    ) {
+        Pageable pageable = PageRequest.of(page - 1, size);
+        return todoRepository.search(title, managerNickname, startDate, endDate, pageable);
     }
 }
