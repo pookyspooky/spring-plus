@@ -1,5 +1,7 @@
 package org.example.expert.domain.user.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.domain.common.dto.AuthUser;
 import org.example.expert.domain.common.exception.InvalidRequestException;
@@ -57,4 +59,12 @@ public class UserService {
 //        String uploadImageUrl = s3Service.uploadFile(file);
 //        user.changeImage(uploadImageUrl);
 //    }
+
+    public List<UserResponse> getUsers(String nickname) {
+        List<User> users = userRepository.findByNickname(nickname);
+
+        return users.stream()
+                .map(user -> new UserResponse(user.getId(), user.getEmail()))
+                .collect(Collectors.toList());
+    }
 }
