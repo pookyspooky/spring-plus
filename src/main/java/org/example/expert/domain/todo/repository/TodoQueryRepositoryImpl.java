@@ -19,11 +19,10 @@ public class TodoQueryRepositoryImpl implements TodoQueryRepository{
         return queryFactory
                 .select(todo)
                 .from(todo)
-                .join(todo.user, user).fetchJoin()
+                .leftJoin(todo.user, user).fetchJoin()
                 .where(
                         todoIdEq(todoID)
                 ).fetchOne();
-
     }
 
     private BooleanExpression todoIdEq(Long todoId) {
